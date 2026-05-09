@@ -1,7 +1,7 @@
 @use "bootstrap/scss/bootstrap" as * with (
   $secondary: #ae19bb,
   $info: #009dff,
-  $body-bg: #EBD8AD,
+  $body-bg: #7B2D21,
   $body-color: #DEC697,
   $link-color: #00ff00,
   $link-hover-color: #00cc00,
@@ -78,36 +78,11 @@ body, html, .container {
   font-family: 'Share Tech Mono', monospace;
 }
 
-/*body {
-  background-image: url('https://www.transparenttextures.com/patterns/old-mathematics.png');
-  background-repeat: repeat;
-  background-attachment: fixed;
-  background-size: auto;
-}*/
-
 body {
-  background-color: #2B251D;
   background-image: url('https://www.transparenttextures.com/patterns/old-mathematics.png');
   background-repeat: repeat;
   background-attachment: fixed;
   background-size: auto;
-  position: relative;
-  min-height: 100vh;
-}
-
-#fantasy-bg-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-body > *:not(#fantasy-bg-canvas) {
-  position: relative;
-  z-index: 1;
 }
 
 .card {

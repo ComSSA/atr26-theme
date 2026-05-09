@@ -15,7 +15,7 @@ export default defineConfig({
       buildEnd() {
         try {
           console.log("\nClearing Redis cache...");
-          const containerName = "ctfd_atr2025-cache-1"; // Depending on your setup, this might need to be changed
+          const containerName = "ctfd_atr2026-cache-1"; // Depending on your setup, this might need to be changed
           const containerId = execSync(`docker ps --filter "name=${containerName}" --format "{{.ID}}"`).toString().trim();
 
           if (!containerId) {

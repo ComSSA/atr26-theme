@@ -105,7 +105,7 @@ body {
   pointer-events: none;
 }
 
-.container, main, #content {
+body > *:not(#fantasy-bg-canvas) {
   position: relative;
   z-index: 1;
 }

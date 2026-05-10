@@ -1,7 +1,7 @@
 @use "bootstrap/scss/bootstrap" as * with (
   $secondary: #ae19bb,
   $info: #009dff,
-  $body-bg: #7B2D21,
+  $body-bg: #DEC697,
   $body-color: #DEC697,
   $link-color: #00ff00,
   $link-hover-color: #00cc00,
@@ -80,7 +80,7 @@ body, html, .container {
 }
 
 body {
-  background-image: url('https://www.transparenttextures.com/patterns/old-mathematics.png');
+  background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
   background-repeat: repeat;
   background-attachment: fixed;
   background-size: auto;

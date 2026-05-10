@@ -76,6 +76,14 @@ select {
   border: var(--bs-border-width) solid #2B251D; 
 }
 
+.form-control {
+    border: var(--bs-border-width) solid #2B251D;
+}
+
+.table {
+  border-color: #2B251D;
+}
+
 body, html, .container {
   font-family: 'Share Tech Mono', monospace;
 }
@@ -106,8 +114,8 @@ body {
 }
 
 .navbar {
-  background-color: #7B2D21 !important;
-  border-bottom: 1px solid #7B2D21; //#2B251D
+  background-color: #2B251D !important;
+  border-bottom: 1px solid #7B2D21; //2B251D
   
   .navbar-brand, .nav-link {
     color: #DEC697 !important;

@@ -33,10 +33,12 @@
 
 [data-bs-theme="light"] .challenge-button {
   border: none;
-  background-color: var(--bs-gray-dark);
+  background-color: #2B251D;
+  //background-color: var(--bs-gray-dark);
 
   &:hover {
-    background-color: var(--bs-gray);
+    background-color: #3d3429;
+    //background-color: var(--bs-gray);
   }
 
   &.challenge-solved {

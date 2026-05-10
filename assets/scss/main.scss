@@ -166,3 +166,31 @@ body {
     }
   }
 }
+
+#coderunner-controls {
+  .btn-outline-secondary {
+    background-color: #7B2D21 !important;
+    color: #DEC697 !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #5a2018 !important;
+      border-color: #5a2018 !important;
+      color: #EBD8AD !important;
+    }
+  }
+
+  #coderunner-reset {
+    background-color: #2B251D !important;
+    color: #DEC697 !important;
+    border-color: #2B251D !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #3d3429 !important;
+      border-color: #3d3429 !important;
+      color: #EBD8AD !important;
+    }
+  }
+}

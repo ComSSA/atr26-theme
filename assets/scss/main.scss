@@ -80,12 +80,10 @@ body, html, .container {
 }
 
 body {
-  background-color: #DEC697;
-  background-image:
-    radial-gradient(ellipse at 20% 30%, rgba(180, 140, 80, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(139, 100, 60, 0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(200, 170, 100, 0.1) 0%, transparent 70%);
+  background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+  background-repeat: repeat;
   background-attachment: fixed;
+  background-size: auto;
 }
 
 .card {

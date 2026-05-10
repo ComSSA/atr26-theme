@@ -86,6 +86,19 @@ body {
   background-size: auto;
 }
 
+.navbar {
+  background-color: #2B251D !important;
+  border-bottom: 1px solid #7B2D21;
+  
+  .navbar-brand, .nav-link {
+    color: #DEC697 !important;
+    
+    &:hover {
+      color: #EBD8AD !important;
+    }
+  }
+}
+
 .card {
   background-color: #2B251D;
   border: 1px solid $primary;

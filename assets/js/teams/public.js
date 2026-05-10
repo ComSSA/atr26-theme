@@ -26,6 +26,14 @@ Alpine.data("TeamGraphs", () => ({
   getCategoryBreakdown() {
     const categories = [];
     const breakdown = {};
+    const paletteColors = [
+      "#7B2D21",
+      "#2B251D",
+      "#C39D81",
+      "#CCAA7A",
+      "#4A6741",
+      "#ae19bb",
+    ];
 
     this.solves.data.map(solve => {
       categories.push(solve.challenge.category);
@@ -45,7 +53,7 @@ Alpine.data("TeamGraphs", () => ({
         name: property,
         count: breakdown[property],
         percent: ((breakdown[property] / categories.length) * 100).toFixed(2),
-        color: colorHash(property),
+        color: paletteColors[data.length % paletteColors.length],
       });
     }
 

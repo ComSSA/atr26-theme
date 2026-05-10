@@ -130,3 +130,39 @@ body {
   background-color: #2B251D;
   border: 1px solid $primary;
 }
+
+.submit-row {
+  .challenge-input {
+    background-color: #EBD8AD !important;
+    color: #2B251D !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &::placeholder {
+      color: #C39D81 !important;
+    }
+
+    &:focus {
+      background-color: #DEC697 !important;
+      border-color: #7B2D21 !important;
+      box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.25) !important;
+    }
+  }
+
+  .challenge-submit {
+    background-color: #7B2D21 !important;
+    color: #DEC697 !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #5a2018 !important;
+      border-color: #5a2018 !important;
+      color: #EBD8AD !important;
+    }
+
+    &:focus, &:active {
+      box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.25) !important;
+    }
+  }
+}

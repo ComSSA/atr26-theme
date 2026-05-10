@@ -55,7 +55,7 @@
       color: #DEC697;
     }
   }
-  
+
   &:hover {
     background-color: #3d3429;
     //background-color: var(--bs-gray);
@@ -70,6 +70,26 @@
 
     &:hover {
       background-color: #5a2018;
+    }
+  }
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #2B251D;
+
+  .nav-link {
+    color: #2B251D;
+    border-color: transparent;
+
+    &:hover {
+      border-color: #2B251D;
+      color: #7B2D21;
+    }
+
+    &.active {
+      background-color: #2B251D;
+      color: #DEC697;
+      border-color: #2B251D;
     }
   }
 }

@@ -31,7 +31,7 @@
   }
 }
 
-/*[data-bs-theme="light"] .challenge-button {
+[data-bs-theme="light"] .challenge-button {
   border: none;
   background-color: var(--bs-gray-dark);
 
@@ -40,10 +40,10 @@
   }
 
   &.challenge-solved {
-    background-color: #29c830;
+    background-color: #7B2D21;
 
     &:hover {
-      background-color: #37d63e;
+      background-color: #5a2018;
     }
   }
-}*/
+}

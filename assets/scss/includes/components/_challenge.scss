@@ -15,6 +15,14 @@
   color: #DEC697;
   box-shadow: 0 0 15px rgba(123, 45, 33, 0.4);
 
+  .challenge-inner {
+    color: #DEC697;  // ← parchment color for the text
+    
+    p, span {
+      color: #DEC697;
+    }
+  }
+
   &:hover {
     background-color: #3d3429;
     color: #EBD8AD;
@@ -23,6 +31,10 @@
   &.challenge-solved {
     background-color: #7B2D21;
     color: #DEC697;
+
+    .challenge-inner {
+      color: #DEC697;
+    }
 
     &:hover {
       background-color: #5a2018;
@@ -36,6 +48,14 @@
   background-color: #2B251D;
   //background-color: var(--bs-gray-dark);
 
+  .challenge-inner {
+    color: #DEC697;  // ← parchment color for the text
+    
+    p, span {
+      color: #DEC697;
+    }
+  }
+  
   &:hover {
     background-color: #3d3429;
     //background-color: var(--bs-gray);
@@ -43,6 +63,10 @@
 
   &.challenge-solved {
     background-color: #7B2D21;
+
+    .challenge-inner {
+      color: #DEC697;
+    }
 
     &:hover {
       background-color: #5a2018;

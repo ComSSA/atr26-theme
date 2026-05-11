@@ -9,32 +9,86 @@
   }
 }
 
-[data-bs-theme="light"] .challenge-button {
+[data-bs-theme="dark"] .challenge-button {
   border: none;
-  box-shadow: 0 0 15px var(--bs-secondary);
+  background-color: #2B251D;
+  color: #DEC697;
+  box-shadow: 0 0 15px rgba(123, 45, 33, 0.4);
+
+  .challenge-inner {
+    color: #DEC697;  // ← parchment color for the text
+    
+    p, span {
+      color: #DEC697;
+    }
+  }
+
+  &:hover {
+    background-color: #3d3429;
+    color: #EBD8AD;
+  }
 
   &.challenge-solved {
-    background-color: #29c830;
+    background-color: #7B2D21;
+    color: #DEC697;
+
+    .challenge-inner {
+      color: #DEC697;
+    }
 
     &:hover {
-      background-color: #37d63e;
+      background-color: #5a2018;
+      color: #EBD8AD;
     }
   }
 }
 
-[data-bs-theme="dark"] .challenge-button {
+.challenge-button {
   border: none;
-  background-color: var(--bs-gray-dark);
+  background-color: #2B251D;
+  //background-color: var(--bs-gray-dark);
+
+  .challenge-inner {
+    color: #DEC697;  // ← parchment color for the text
+    
+    p, span {
+      color: #DEC697;
+    }
+  }
 
   &:hover {
-    background-color: var(--bs-gray);
+    background-color: #3d3429;
+    //background-color: var(--bs-gray);
   }
 
   &.challenge-solved {
-    background-color: #29c830;
+    background-color: #7B2D21;
+
+    .challenge-inner {
+      color: #DEC697;
+    }
 
     &:hover {
-      background-color: #37d63e;
+      background-color: #5a2018;
+    }
+  }
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #2B251D;
+
+  .nav-link {
+    color: #7B2D21;
+    border-color: transparent;
+
+    &:hover {
+      border-color: #2B251D;
+    }
+
+    &.active {
+      background-color: #2B251D;
+      color: #DEC697;
+      border-color: #2B251D;
     }
   }
 }

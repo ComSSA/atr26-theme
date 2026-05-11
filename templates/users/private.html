@@ -154,26 +154,26 @@
           <div class="progress">
             <div 
               class="progress-bar" 
-              role="progressbar" 
-              :style="{ width: `${getSolvePercentage()}%`, 'background-color': 'rgb(0, 209, 64)' }" 
+              role="progressbar"
+              :style="{ width: `${getSolvePercentage()}%`, 'background-color': '#4A6741' }" 
             >
             </div>
             <div 
               class="progress-bar" 
-              role="progressbar" 
-              :style="{ width: `${getFailPercentage()}%`, 'background-color': 'rgb(207, 38, 0)' }"
+              role="progressbar"
+              :style="{ width: `${getFailPercentage()}%`, 'background-color': '#7B2D21' }"
             >
             </div>
           </div>
           <div class="ps-2 float-start">
             <svg height="16" width="16">
-              <circle cx="8" cy="8" r="5" fill="rgb(0, 209, 64)" />
+              <circle cx="8" cy="8" r="5" fill="#4A6741"></circle>
             </svg>
             <small x-text="`Solves (${getSolvePercentage()}%)`"></small>
           </div>
           <div class="ps-2 float-start">
             <svg height="16" width="16">
-              <circle cx="8" cy="8" r="5" fill="rgb(207, 38, 0)" />
+              <circle cx="8" cy="8" r="5" fill="#7B2D21"></circle>
             </svg>
             <small x-text="`Fails (${getFailPercentage()}%)`"></small>
           </div>

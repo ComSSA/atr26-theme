@@ -20,3 +20,37 @@
 .table > thead > th {
   white-space: nowrap;
 }
+
+table {
+  thead {
+    th {
+      background-color: #2B251D !important;
+      color: #DEC697 !important;
+      border-color: #3d3429 !important;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+  }
+
+  tbody {
+    tr {
+      background-color: #DEC697;
+      color: #2B251D;
+      border-color: #C39D81;
+
+      &:nth-child(even) {
+        background-color: #EBD8AD;
+      }
+
+      &:hover {
+        background-color: #CCAA7A !important;
+        color: #2B251D !important;
+      }
+
+      td {
+        border-color: #C39D81 !important;
+        color: #2B251D !important;
+      }
+    }
+  }
+}

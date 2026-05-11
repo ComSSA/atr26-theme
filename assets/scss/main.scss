@@ -1,13 +1,24 @@
 @use "bootstrap/scss/bootstrap" as * with (
-  $primary: #00ff00,
-  $secondary: #ae19bb,
+  $secondary: #a0493c,
   $info: #009dff,
-  $body-bg: #000000,
-  $body-color: #00ff00,
-  $link-color: #00ff00,
-  $link-hover-color: #00cc00,
-  $nav-pills-link-active-color: #212529
+  $body-bg: #EBD8AD,
+  $body-color: #2B251D,
+  $link-color: #c04b39,
+  $link-hover-color: #7B2D21,
+  $nav-pills-link-active-color: #2B251D
+
 );
+
+/*
+Hex for colours:
+EBD8AD
+DEC697
+CCAA7A
+C39D81
+7B2D21
+2B251D
+
+*/
 
 @use "includes/components/table";
 @use "includes/components/jumbotron";
@@ -62,12 +73,124 @@ select {
 .form-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
   background-size: 8px 10px;
+  border: var(--bs-border-width) solid #2B251D; 
 }
+
+.form-control {
+    border: var(--bs-border-width) solid #2B251D;
+}
+
+.table {
+  border-color: #2B251D;
+}
+
 body, html, .container {
   font-family: 'Share Tech Mono', monospace;
 }
 
+body {
+  background-image: url('https://www.transparenttextures.com/patterns/light-aluminum.png');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: auto;
+}
+
+.btn-primary {
+  background-color: #7B2D21 !important;
+  border-color: #7B2D21 !important;
+  color: #DEC697 !important;
+
+  &:hover {
+    background-color: #5a2018 !important;
+    border-color: #5a2018 !important;
+    color: #EBD8AD !important;
+  }
+
+  &:focus, &:active {
+    background-color: #5a2018 !important;
+    border-color: #5a2018 !important;
+    box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.4) !important;
+  }
+}
+
+.navbar {
+  background-color: #2B251D !important;
+  border-bottom: 1px solid #7B2D21; //2B251D
+  
+  .navbar-brand, .nav-link {
+    color: #DEC697 !important;
+    
+    &:hover {
+      color: #EBD8AD !important;
+    }
+  }
+}
+
 .card {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #2B251D;
   border: 1px solid $primary;
+}
+
+.submit-row {
+  .challenge-input {
+    background-color: #EBD8AD !important;
+    color: #2B251D !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &::placeholder {
+      color: #C39D81 !important;
+    }
+
+    &:focus {
+      background-color: #DEC697 !important;
+      border-color: #7B2D21 !important;
+      box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.25) !important;
+    }
+  }
+
+  .challenge-submit {
+    background-color: #7B2D21 !important;
+    color: #DEC697 !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #5a2018 !important;
+      border-color: #5a2018 !important;
+      color: #EBD8AD !important;
+    }
+
+    &:focus, &:active {
+      box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.25) !important;
+    }
+  }
+}
+
+#coderunner-controls {
+  .btn-outline-secondary {
+    background-color: #7B2D21 !important;
+    color: #DEC697 !important;
+    border-color: #7B2D21 !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #5a2018 !important;
+      border-color: #5a2018 !important;
+      color: #EBD8AD !important;
+    }
+  }
+
+  #coderunner-reset {
+    background-color: #2B251D !important;
+    color: #DEC697 !important;
+    border-color: #2B251D !important;
+    font-family: 'Share Tech Mono', monospace;
+
+    &:hover {
+      background-color: #3d3429 !important;
+      border-color: #3d3429 !important;
+      color: #EBD8AD !important;
+    }
+  }
 }

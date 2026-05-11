@@ -9,7 +9,7 @@ export function getOption(id, name, solves, awards, optionMerge) {
       left: "center",
       text: "Score over Time",
       textStyle: {
-        color: "#00ff00",
+        color: "#7B2D21",
         fontFamily: "'Share Tech Mono', monospace",
       },
     },
@@ -18,25 +18,25 @@ export function getOption(id, name, solves, awards, optionMerge) {
       axisPointer: {
         type: "cross",
         label: {
-          backgroundColor: "#212529",
-          color: "#ffffff",
-          borderColor: "#00ff00",
+          backgroundColor: "#2B251D",
+          color: "#DEC697",
+          borderColor: "#7B2D21",
           borderWidth: 1,
           padding: [5, 10],
           fontFamily: "'Share Tech Mono', monospace",
         },
         crossStyle: {
-          color: "#00ff00",
+          color: "#7B2D21",
         },
         lineStyle: {
-          color: "#00ff00",
+          color: "#7B2D21",
         },
       },
-      backgroundColor: "#212529",
-      borderColor: "#00ff00",
+      backgroundColor: "#2B251D",
+      borderColor: "#7B2D21",
       borderWidth: 1,
       textStyle: {
-        color: "#ffffff",
+        color: "#DEC697",
         fontFamily: "'Share Tech Mono', monospace",
       },
     },
@@ -47,13 +47,13 @@ export function getOption(id, name, solves, awards, optionMerge) {
       bottom: 35,
       data: [name],
       textStyle: {
-        color: "#00ff00",
+        color: "#2B251D",
         fontFamily: "'Share Tech Mono', monospace",
       },
     },
     toolbox: {
       iconStyle: {
-        borderColor: "#00ff00",
+        borderColor: "#7B2D21",
       },
       feature: {
         dataZoom: {
@@ -62,13 +62,13 @@ export function getOption(id, name, solves, awards, optionMerge) {
         saveAsImage: {},
         title: "Download",
         iconStyle: {
-          borderColor: "#00ff00",
+          borderColor: "#7B2D21",
         },
       },
     },
     grid: {
       containLabel: true,
-      borderColor: "#00ff00",
+      borderColor: "#7B2D21",
     },
     xAxis: [
       {
@@ -77,16 +77,16 @@ export function getOption(id, name, solves, awards, optionMerge) {
         data: [],
         axisLine: {
           lineStyle: {
-            color: "#00ff00"
-          }
+            color: "#7B2D21",
+          },
         },
         axisLabel: {
-          color: "#00ff00",
-          fontFamily: "'Share Tech Mono', monospace"
+          color: "#2B251D",
+          fontFamily: "'Share Tech Mono', monospace",
         },
         splitLine: {
           lineStyle: {
-            color: "#005500",
+            color: "#C39D81",
           },
         },
       },
@@ -94,11 +94,18 @@ export function getOption(id, name, solves, awards, optionMerge) {
     yAxis: [
       {
         type: "value",
-        axisLine: { lineStyle: { color: "#00ff00" } },
-        axisLabel: { color: "#00ff00", fontFamily: "'Share Tech Mono', monospace" },
+        axisLine: {
+          lineStyle: {
+            color: "#7B2D21",
+          },
+        },
+        axisLabel: {
+          color: "#2B251D",
+          fontFamily: "'Share Tech Mono', monospace",
+        },
         splitLine: {
           lineStyle: {
-            color: "#005500",
+            color: "#C39D81",
           },
         },
       },
@@ -111,20 +118,20 @@ export function getOption(id, name, solves, awards, optionMerge) {
         filterMode: "filter",
         height: 15,
         bottom: 10,
-        fillerColor: "rgba(0, 255, 0, 0.1)",
+        fillerColor: "rgba(123, 45, 33, 0.15)",
         moveHandleStyle: {
-          color: "#008800",
+          color: "#5a2018",
         },
         handleStyle: {
-          color: "#00ff00",
+          color: "#7B2D21",
         },
         textStyle: {
-          color: "#00ff00",
+          color: "#2B251D",
         },
-        backgroundColor: "#212529",
+        backgroundColor: "#EBD8AD",
         emphasis: {
           moveHandleStyle: {
-            color: "#00ff00",
+            color: "#7B2D21",
           },
         },
       },
@@ -165,7 +172,7 @@ export function getOption(id, name, solves, awards, optionMerge) {
       normal: {
         show: true,
         position: "top",
-        color: "#00ff00",
+        color: "#2B251D",
         fontFamily: "'Share Tech Mono', monospace",
       },
     },

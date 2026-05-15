@@ -287,147 +287,198 @@ Alpine.data("ChallengeBoard", () => ({
 
 Alpine.start();
 
+const MAP_ASSETS = {
+  background: "/themes/atr26-theme/static/img/map.svg",
+  red_seal: "/themes/atr26-theme/static/img/red_wax_seal.svg",
+  grey_seal: "/themes/atr26-theme/static/img/grey_wax_seal.svg",
+  rooms_config: "/atr26_game/api/rooms",
+};
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+function tagsAsProps(tags) {
+  const props = {};
+  if (!tags) return props;
+  for (const t of tags) {
+    const idx = t.value.indexOf(":");
+    if (idx < 0) {
+      props[t.value] = true;
+      continue;
+    }
+    const k = t.value.slice(0, idx);
+    const v = t.value.slice(idx + 1);
+    if (k) props[k] = v;
+  }
+  return props;
+}
+
 class MapManager {
   constructor(challenges) {
     this.challenges = challenges;
     this.icons = [];
-    this.registerMouseOverHook();
     this.width = 1140;
     this.height = 554;
+    this.roomsById = {};
+    this.sealSize = 45;
+    this.assets = {};
+    this.registerMouseOverHook();
     this.render();
   }
 
-  getChallenges() {
-    return this.challenges;
-  }
-
   async render() {
-    await this.renderBackground();
-    await this.renderTasks();
-  }
+    const [bg, red, grey, roomsResp] = await Promise.all([
+      loadImage(MAP_ASSETS.background),
+      loadImage(MAP_ASSETS.red_seal),
+      loadImage(MAP_ASSETS.grey_seal),
+      fetch(MAP_ASSETS.rooms_config).then(r => r.json()).catch(() => null),
+    ]);
+    this.assets = { bg, red, grey };
 
-  async renderBackground() {
+    if (roomsResp && roomsResp.success && roomsResp.data) {
+      const cfg = roomsResp.data;
+      this.sealSize = cfg.seal_size || this.sealSize;
+      for (const r of cfg.rooms) this.roomsById[r.id] = r;
+    }
+
     const canvas = document.getElementById("map");
     const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.src = "/themes/atr26-theme/static/img/map.svg";
-    await new Promise(resolve => {
-      img.onload = () => {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      resolve();
-      };
-    });
+    ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+    this.renderSeals(ctx);
   }
 
-  async renderTasks() {
-    // filter down to tasks with tags and not already complete
-    let tasks = this.challenges.filter(challenge => {
-      return challenge.tags && challenge.tags.length > 0 && !challenge.solved_by_me;
-    });
-    // adding new tasks icons to mapRoot
-    for (let i = 0; i < tasks.length; i++) {
-      const task = tasks[i];
-      const props = {};
-
-      // decode tags
-      for (let j = 0; j < task.tags.length; j++) {
-        const split = task.tags[j].value.split(":");
-        const key = split[0];
-        const value = split[1];
-        if (key && value) {
-          props[key] = value;
+  renderSeals(ctx) {
+    // Debug: `?seal_debug=1` draws a seal at every defined position so we
+    // can visually tune rooms.json without needing real challenges to map.
+    if (new URLSearchParams(window.location.search).has("seal_debug")) {
+      this.icons = [];
+      const size = this.sealSize;
+      for (const roomId in this.roomsById) {
+        const room = this.roomsById[roomId];
+        const positions = room.positions || [];
+        for (const pos of positions) {
+          const x = pos.x - size / 2;
+          const y = pos.y - size / 2;
+          ctx.drawImage(this.assets.red, x, y, size, size);
         }
       }
+      return;
+    }
 
-      const canvas = document.getElementById("map");
-      const ctx = canvas.getContext("2d");
+    // group unsolved tagged challenges by room
+    const byRoom = {};
+    for (const c of this.challenges) {
+      if (c.solved_by_me) continue;
+      if (!c.tags || c.tags.length === 0) continue;
+      const props = tagsAsProps(c.tags);
+      if (!props.room) continue;
+      const room = this.roomsById[props.room];
+      if (!room) continue;
+      (byRoom[props.room] = byRoom[props.room] || []).push({ challenge: c, props });
+    }
 
-      // Ensure props.x and props.y exist and are numbers
-      if (props.x && props.y) {
-        const x = parseInt(props.x);
-        const y = parseInt(props.y);
+    this.icons = [];
+    for (const roomId in byRoom) {
+      const room = this.roomsById[roomId];
+      const items = byRoom[roomId];
+      items.sort((a, b) => a.challenge.id - b.challenge.id);
+      this.drawRoomSeals(ctx, room, items);
+    }
+  }
 
-        const img = new Image();
-        img.src = "/themes/atr26-theme/static/img/task.png";
-        img.onload = () => {
-          ctx.drawImage(img, x, y, 49, 49);
-          this.icons.push({ x, y, width: 49, height: 49, task });
-        };
-      }
+  drawRoomSeals(ctx, room, items) {
+    const positions = room.positions;
+    if (!positions || positions.length === 0) return;
+    const size = this.sealSize;
+
+    for (let i = 0; i < items.length; i++) {
+      const { challenge, props } = items[i];
+      const pos = positions[i % positions.length];
+      const dx = props.x_offset ? parseInt(props.x_offset, 10) || 0 : 0;
+      const dy = props.y_offset ? parseInt(props.y_offset, 10) || 0 : 0;
+      const x = pos.x - size / 2 + dx;
+      const y = pos.y - size / 2 + dy;
+
+      const available = props.available !== "false";
+      const img = available ? this.assets.red : this.assets.grey;
+      ctx.drawImage(img, x, y, size, size);
+      this.icons.push({ x, y, width: size, height: size, task: challenge, room, available });
     }
   }
 
   registerMouseOverHook() {
     const canvas = document.getElementById("map");
-    let hoveredTask = null;
+    let hoveredIcon = null;
 
     canvas.addEventListener("mousemove", event => {
       const rect = canvas.getBoundingClientRect();
-      const mouseX = event.clientX - rect.left;
-      const mouseY = event.clientY - rect.top;
-
       const scaleX = rect.width / this.width;
       const scaleY = rect.height / this.height;
+      const sx = (event.clientX - rect.left) / scaleX;
+      const sy = (event.clientY - rect.top) / scaleY;
 
-      // scaled mouse position against 1000x500
-      const scaledX = mouseX / scaleX;
-      const scaledY = mouseY / scaleY;
-
-      // check if mouse is over any icon
-      let found = false;
-      for (let i = 0; i < this.icons.length; i++) {
-        const icon = this.icons[i];
+      let found = null;
+      for (const icon of this.icons) {
         if (
-          scaledX >= icon.x &&
-          scaledX <= icon.x + icon.width &&
-          scaledY >= icon.y &&
-          scaledY <= icon.y + icon.height
+          sx >= icon.x &&
+          sx <= icon.x + icon.width &&
+          sy >= icon.y &&
+          sy <= icon.y + icon.height
         ) {
-          found = true;
-          hoveredTask = icon.task; // Store the hovered task
-          const scrollX = window.scrollX || document.documentElement.scrollLeft;
-          const scrollY = window.scrollY || document.documentElement.scrollTop;
-          this.showTooltip(icon.task, event.clientX + scrollX, event.clientY + scrollY);
-          canvas.style.cursor = "pointer";
+          found = icon;
           break;
         }
       }
-      if (!found) {
-        hoveredTask = null; // Reset hovered task
+      if (found) {
+        hoveredIcon = found;
+        canvas.style.cursor = found.available ? "pointer" : "not-allowed";
+        const scrollX = window.scrollX || document.documentElement.scrollLeft;
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        this.showTooltip(found, event.clientX + scrollX, event.clientY + scrollY);
+      } else {
+        hoveredIcon = null;
         canvas.style.cursor = "default";
         this.hideTooltip();
       }
     });
 
-    canvas.addEventListener("click", async () => {
-      if (hoveredTask) {
-        const challengeId = hoveredTask.id; 
-        if (challengeId) {
-          this.hideTooltip();
-          await CTFd.pages.challenge.displayChallenge(challengeId, challenge => {
-            challenge.data.view = addTargetBlank(challenge.data.view);
-            Alpine.store("challenge").data = challenge.data;
+    canvas.addEventListener("mouseleave", () => {
+      hoveredIcon = null;
+      canvas.style.cursor = "default";
+      this.hideTooltip();
+    });
 
-            Alpine.nextTick(() => {
-              let modal = Modal.getOrCreateInstance("[x-ref='challengeWindow']");
-              modal._element.addEventListener(
-                "hidden.bs.modal",
-                () => {
-                  // Replace history state back to /challenges when modal is closed
-                  history.replaceState(null, null, "/challenges");
-                },
-                { once: true }
-              );
-              modal.show();
-              history.replaceState(null, null, `#${challenge.data.name}-${challengeId}`);
-            });
-          });
-        }
-      }
+    canvas.addEventListener("click", async () => {
+      if (!hoveredIcon || !hoveredIcon.available) return;
+      const challengeId = hoveredIcon.task.id;
+      if (!challengeId) return;
+      this.hideTooltip();
+      await CTFd.pages.challenge.displayChallenge(challengeId, challenge => {
+        challenge.data.view = addTargetBlank(challenge.data.view);
+        Alpine.store("challenge").data = challenge.data;
+        Alpine.nextTick(() => {
+          const modal = Modal.getOrCreateInstance("[x-ref='challengeWindow']");
+          modal._element.addEventListener(
+            "hidden.bs.modal",
+            () => {
+              history.replaceState(null, null, "/challenges");
+            },
+            { once: true },
+          );
+          modal.show();
+          history.replaceState(null, null, `#${challenge.data.name}-${challengeId}`);
+        });
+      });
     });
   }
 
-  showTooltip(task, x, y) {
+  showTooltip(icon, x, y) {
     let tooltip = document.getElementById("map-tooltip");
     if (!tooltip) {
       tooltip = document.createElement("div");
@@ -435,52 +486,53 @@ class MapManager {
       document.body.appendChild(tooltip);
     }
 
+    const task = icon.task;
     let category = task.category;
-    // if there is a tag of c:0, then don't show category
     if (task.tags) {
-      for (let i = 0; i < task.tags.length; i++) {
-        const tag = task.tags[i];
+      for (const tag of task.tags) {
         if (tag.value === "c:0") {
           category = "";
           break;
         }
       }
     }
-    // Create a shadow copy element to determine the width
-    let shadowTooltip = document.createElement("div");
-    shadowTooltip.style.position = "absolute";
-    shadowTooltip.style.visibility = "hidden";
-    shadowTooltip.style.whiteSpace = "nowrap";
-    shadowTooltip.innerHTML = `
-      <div>${task.name}</div>
-      <div>${category != "" ? category + " - " : ""}${task.value}</div>
-    `;
-    document.body.appendChild(shadowTooltip);
 
-    const tooltipWidth = shadowTooltip.offsetWidth;
-    document.body.removeChild(shadowTooltip);
+    const roomLabel = icon.room ? icon.room.label : "";
+    const statusLabel = icon.available ? "Available" : "Unavailable";
+    const statusClass = icon.available ? "available" : "unavailable";
 
-    const screenWidth = window.innerWidth;
-
-    // Check if the tooltip would overflow on the right side of the screen
-    let adjustedX = x + 10;
-    if (adjustedX + tooltipWidth > screenWidth) {
-      adjustedX = x - tooltipWidth - 10; // Align to the left side
-    }
-
+    tooltip.classList.toggle("unavailable", !icon.available);
     tooltip.innerHTML = `
-      <div>${task.name}</div>
-      <div>${category != "" ? category + " - " : ""}${task.value}</div>
+      <div class="map-tooltip__name">${task.name}</div>
+      <div class="map-tooltip__meta">
+        ${category ? `<span class="map-tooltip__category">${category}</span>` : ""}
+        ${task.value !== undefined ? `<span class="map-tooltip__value">${task.value} pts</span>` : ""}
+      </div>
+      ${roomLabel ? `<div class="map-tooltip__room">${roomLabel}</div>` : ""}
+      <div class="map-tooltip__status map-tooltip__status--${statusClass}">${statusLabel}</div>
     `;
-    tooltip.style.left = `${adjustedX}px`;
-    tooltip.style.top = `${y + 10}px`;
+
+    // measure after content is set so the layout is current
+    tooltip.style.visibility = "hidden";
     tooltip.classList.add("visible");
+    const tw = tooltip.offsetWidth;
+    const th = tooltip.offsetHeight;
+
+    let adjX = x + 14;
+    if (adjX + tw > window.innerWidth - 8) {
+      adjX = Math.max(8, x - tw - 14);
     }
+    let adjY = y + 14;
+    if (adjY + th > window.innerHeight + window.scrollY - 8) {
+      adjY = Math.max(8, y - th - 14);
+    }
+    tooltip.style.left = `${adjX}px`;
+    tooltip.style.top = `${adjY}px`;
+    tooltip.style.visibility = "";
+  }
 
   hideTooltip() {
     const tooltip = document.getElementById("map-tooltip");
-    if (tooltip) {
-      tooltip.classList.remove("visible");
-    }
+    if (tooltip) tooltip.classList.remove("visible");
   }
 }

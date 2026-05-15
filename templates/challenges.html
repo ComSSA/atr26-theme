@@ -36,8 +36,18 @@
 
       <div x-show="loaded">
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column align-items-center">
             <canvas id="map" width="1140" height="554"></canvas>
+            <div class="map-legend" aria-label="Map legend">
+                <span class="map-legend__item">
+                    <img class="map-legend__icon" src="/themes/atr26-theme/static/img/red_wax_seal.svg" alt=""/>
+                    <span>Available</span>
+                </span>
+                <span class="map-legend__item">
+                    <img class="map-legend__icon" src="/themes/atr26-theme/static/img/grey_wax_seal.svg" alt=""/>
+                    <span>Unavailable</span>
+                </span>
+            </div>
         </div>
 
         <template x-for="(category, idx) in getCategories()" :key="idx">

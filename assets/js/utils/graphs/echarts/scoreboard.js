@@ -1,5 +1,50 @@
-import { colorHash } from "@ctfdio/ctfd-js/ui";
 import { mergeObjects } from "../../objects";
+
+// 24 hand-picked colours. Consecutive entries jump ~180° across the hue
+// wheel so adjacent lines are never from the same colour family.
+// Lightness alternates dark/light within each jump to add extra separation.
+const PALETTE = [
+  "hsl(4,   58%, 26%)",  // deep crimson
+  "hsl(184, 52%, 52%)",  // aqua
+  "hsl(38,  60%, 28%)",  // dark amber
+  "hsl(218, 48%, 56%)",  // sky blue
+  "hsl(118, 54%, 24%)",  // deep forest green
+  "hsl(298, 48%, 52%)",  // medium magenta
+  "hsl(68,  52%, 26%)",  // dark olive
+  "hsl(248, 50%, 54%)",  // medium indigo
+  "hsl(158, 56%, 26%)",  // dark jade
+  "hsl(328, 52%, 56%)",  // dusty rose
+  "hsl(22,  55%, 54%)",  // terracotta/peach
+  "hsl(202, 58%, 28%)",  // dark steel blue
+  "hsl(88,  50%, 50%)",  // sage/lime
+  "hsl(268, 54%, 28%)",  // dark violet
+  "hsl(142, 48%, 52%)",  // sea green
+  "hsl(348, 58%, 26%)",  // dark wine
+  "hsl(52,  56%, 52%)",  // warm gold
+  "hsl(232, 52%, 28%)",  // dark navy
+  "hsl(172, 52%, 50%)",  // aqua-teal
+  "hsl(312, 54%, 26%)",  // dark plum
+  "hsl(106, 50%, 26%)",  // deep moss
+  "hsl(286, 48%, 54%)",  // soft purple
+  "hsl(15,  58%, 32%)",  // medium rust
+  "hsl(195, 54%, 24%)",  // dark teal
+];
+
+// For teams beyond 24: golden angle hue + 4 lightness tiers so no two
+// overflow colours share both similar hue and similar brightness.
+const OVERFLOW_TIERS = [
+  { l: 24, s: 55 },
+  { l: 54, s: 44 },
+  { l: 66, s: 36 },
+  { l: 38, s: 50 },
+];
+
+function paletteColor(i) {
+  if (i < PALETTE.length) return PALETTE[i];
+  const hue = ((i - PALETTE.length) * 137.508) % 360;
+  const { l, s } = OVERFLOW_TIERS[i % OVERFLOW_TIERS.length];
+  return `hsl(${Math.round(hue)}, ${s}%, ${l}%)`;
+}
 import { cumulativeSum } from "../../math";
 import dayjs from "dayjs";
 
@@ -171,7 +216,7 @@ export function getOption(mode, places, optionMerge) {
       },
       itemStyle: {
         normal: {
-          color: colorHash(places[teams[i]]["name"] + places[teams[i]]["id"]),
+          color: paletteColor(i),
         },
       },
       data: scores,

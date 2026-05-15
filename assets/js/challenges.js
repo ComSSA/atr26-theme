@@ -292,8 +292,8 @@ class MapManager {
     this.challenges = challenges;
     this.icons = [];
     this.registerMouseOverHook();
-    this.width = 1020;
-    this.height = 496;
+    this.width = 1140;
+    this.height = 554;
     this.render();
   }
 
@@ -303,7 +303,6 @@ class MapManager {
 
   async render() {
     await this.renderBackground();
-    await this.renderRoomText();
     await this.renderTasks();
   }
 
@@ -311,52 +310,13 @@ class MapManager {
     const canvas = document.getElementById("map");
     const ctx = canvas.getContext("2d");
     const img = new Image();
-    img.src = "/themes/atr25-theme/static/img/map.svg";
+    img.src = "/themes/atr26-theme/static/img/map.svg";
     await new Promise(resolve => {
       img.onload = () => {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       resolve();
       };
     });
-  }
-
-  async renderRoomText() {
-    const templateTexts = [
-      { text: "Main Hall", x: 764, y: 404 },
-      { text: "Reception", x: 350, y: 380 },
-      { text: "Deepwell|Archive", x: 90, y: 363 },
-      { text: "Cafeteria", x: 150, y: 100 },
-      { text: "Terrestrial|History", x: 363, y: 100 },
-      { text: "Astral|Sciences", x: 560, y: 100 },
-      { text: "Staff Halls", x: 753, y: 100 },
-      { text: "The Lion's|Eye|Diamond", x: 944, y: 100 },
-    ];
-    let texts = templateTexts;
-    if (window["serverTexts"]) {
-      // For manual overrides if needed during an event, loading from the injected header
-      texts = window["serverTexts"];
-    }
-    const canvas = document.getElementById("map");
-    const ctx = canvas.getContext("2d");
-
-    ctx.font = "26px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 4;
-    ctx.fillStyle = "white";
-    for (let i = 0; i < texts.length; i++) {
-      const text = texts[i];
-      const lines = text.text.split("|");
-      const lineHeight = 36;
-      const startY = text.y - (lines.length - 1) * (lineHeight / 2);
-
-      for (let j = 0; j < lines.length; j++) {
-        const lineY = startY + j * lineHeight;
-        ctx.strokeText(lines[j], text.x, lineY);
-        ctx.fillText(lines[j], text.x, lineY);
-      }
-    }
   }
 
   async renderTasks() {
@@ -388,7 +348,7 @@ class MapManager {
         const y = parseInt(props.y);
 
         const img = new Image();
-        img.src = "/themes/atr25-theme/static/img/task.png";
+        img.src = "/themes/atr26-theme/static/img/task.png";
         img.onload = () => {
           ctx.drawImage(img, x, y, 49, 49);
           this.icons.push({ x, y, width: 49, height: 49, task });

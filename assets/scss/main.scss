@@ -73,7 +73,7 @@ select {
 .form-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
   background-size: 8px 10px;
-  border: var(--bs-border-width) solid #2B251D; 
+  border: var(--bs-border-width) solid #2B251D;
 }
 
 .form-control {
@@ -131,6 +131,12 @@ body {
   border: 1px solid $primary;
 }
 
+.modal-content {
+  --bs-modal-bg: #EBD8AD;
+  color: #2B251D;
+}
+
+
 .submit-row {
   .challenge-input {
     background-color: #EBD8AD !important;
@@ -181,7 +187,8 @@ body {
     }
   }
 
-  #coderunner-reset {
+  #coderunner-reset,
+  #coderunner-restore {
     background-color: #2B251D !important;
     color: #DEC697 !important;
     border-color: #2B251D !important;
@@ -193,4 +200,74 @@ body {
       color: #EBD8AD !important;
     }
   }
+}
+
+:root {
+  --bs-border-color: #7B2D21;
+}
+
+.navbar-toggler {
+  --bs-navbar-toggler-border-color: #EBD8AD;
+  border-color: #EBD8AD !important;
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23EBD8AD' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+}
+
+
+.btn-info,
+a.btn-info {
+  background-color: #7B2D21 !important;
+  border-color: #7B2D21 !important;
+  color: #DEC697 !important;
+
+  &:hover {
+    background-color: #5a2018 !important;
+    border-color: #5a2018 !important;
+    color: #EBD8AD !important;
+  }
+}
+
+.btn-outline-primary {
+  color: #7B2D21 !important;
+  border-color: #7B2D21 !important;
+
+  &:hover {
+    background-color: #7B2D21 !important;
+    color: #DEC697 !important;
+  }
+}
+
+
+a[href="/users"],
+a[href="/teams"] {
+  display: none !important;
+}
+
+.CaptainMenu a,
+[x-data="CaptainMenu"] a {
+  color: #DEC697;
+
+  &:hover {
+    color: #EBD8AD;
+  }
+}
+
+
+.alert-info {
+  background-color: rgba(123, 45, 33, 0.15) !important;
+  border-color: #7B2D21 !important;
+  color: #2B251D !important;
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background-color: #7B2D21 !important;
+  border-color: #7B2D21 !important;
+}
+
+.form-check-input:focus {
+  border-color: #7B2D21 !important;
+  box-shadow: 0 0 0 0.25rem rgba(123, 45, 33, 0.25) !important;
 }

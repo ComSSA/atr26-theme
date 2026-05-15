@@ -1,4 +1,27 @@
-import { colorHash } from "@ctfdio/ctfd-js/ui";
+const PALETTE = [
+  "hsl(4,   58%, 26%)",  "hsl(184, 52%, 52%)",  "hsl(38,  60%, 28%)",
+  "hsl(218, 48%, 56%)",  "hsl(118, 54%, 24%)",  "hsl(298, 48%, 52%)",
+  "hsl(68,  52%, 26%)",  "hsl(248, 50%, 54%)",  "hsl(158, 56%, 26%)",
+  "hsl(328, 52%, 56%)",  "hsl(22,  55%, 54%)",  "hsl(202, 58%, 28%)",
+  "hsl(88,  50%, 50%)",  "hsl(268, 54%, 28%)",  "hsl(142, 48%, 52%)",
+  "hsl(348, 58%, 26%)",  "hsl(52,  56%, 52%)",  "hsl(232, 52%, 28%)",
+  "hsl(172, 52%, 50%)",  "hsl(312, 54%, 26%)",  "hsl(106, 50%, 26%)",
+  "hsl(286, 48%, 54%)",  "hsl(15,  58%, 32%)",  "hsl(195, 54%, 24%)",
+];
+
+const OVERFLOW_TIERS = [
+  { l: 24, s: 55 },
+  { l: 54, s: 44 },
+  { l: 66, s: 36 },
+  { l: 38, s: 50 },
+];
+
+function paletteColor(i) {
+  if (i < PALETTE.length) return PALETTE[i];
+  const hue = ((i - PALETTE.length) * 137.508) % 360;
+  const { l, s } = OVERFLOW_TIERS[i % OVERFLOW_TIERS.length];
+  return `hsl(${Math.round(hue)}, ${s}%, ${l}%)`;
+}
 import { cumulativeSum } from "../../math";
 import { mergeObjects } from "../../objects";
 import dayjs from "dayjs";
@@ -178,13 +201,13 @@ export function getOption(id, name, solves, awards, optionMerge) {
     },
     areaStyle: {
       normal: {
-        color: colorHash(name + id),
+        color: paletteColor(parseInt(id, 10) || 0),
         opacity: 0.4,
       },
     },
     itemStyle: {
       normal: {
-        color: colorHash(name + id),
+        color: paletteColor(parseInt(id, 10) || 0),
       },
     },
     data: seriesData,
